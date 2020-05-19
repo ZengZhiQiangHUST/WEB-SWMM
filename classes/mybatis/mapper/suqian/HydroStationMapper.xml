@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--客户映射 指定到dao接口 -->
+<mapper namespace="com.jcf.suchness.mapper.suqian.HydroStationMapper">
+    <resultMap id="HydroStation" type="com.jcf.suchness.model.suqian.entity.HydroStation">
+        <result property="stationId" column="station_id"/>
+        <result property="hydroTime" column="hydrotime" jdbcType="TIMESTAMP"/>
+        <result property="flowValue" column="flow"/>
+        <result property="watValue" column="waterlevel"/>
+    </resultMap>
+    <!--id与dao接口的方法名一直，指定结果类型，和参数类型 -->
+    <select id="getHydroStation" resultMap="HydroStation">
+        SELECT
+          *
+        FROM hydrostation WHERE hydrotime <![CDATA[>=]]>#{startTime} and hydrotime<![CDATA[<=]]>#{endTime} and station_id=#{stationId} order by hydrotime
+    </select>
+    <!-- 插入水文监测站数据到数据库 -->
+    <insert id="insertHydroData" parameterType="java.util.List">
+        insert into hydrostation
+        (
+        station_id,
+        hydrotime,
+        flow,
+        waterlevel
+        )
+        values
+        <foreach collection="list" item="item" index= "index" separator =",">
+            (
+            #{item.stationId},
+            #{item.hydroTime},
+            #{item.flowValue},
+            #{item.watValue}
+            )
+        </foreach>
+    </insert>
+    <delete id="deleteHydroData" >
+        delete
+        FROM hydrostation WHERE hydrotime <![CDATA[>=]]>#{startTime} and hydrotime<![CDATA[<=]]>#{endTime} and station_id=#{stationId}
+    </delete>
+</mapper>

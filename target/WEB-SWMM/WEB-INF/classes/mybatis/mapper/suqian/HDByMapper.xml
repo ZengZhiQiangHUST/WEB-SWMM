@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--客户映射 指定到dao接口 -->
+<mapper namespace="com.jcf.webswmm.mapper.suqian.HDByMapper">
+    <resultMap id="HDBy" type="com.jcf.webswmm.model.suqian.back.HDBy">
+        <result property="riverNetID" column="rivernetid"/>
+        <result property="riverID" column="riverid"/>
+        <result property="byUp" column="byup"/>
+        <result property="byDown" column="bydown"/>
+        <result property="upSectionID" column="upsectionid"/>
+        <result property="downSectionID" column="downsectionid"/>
+    </resultMap>
+
+
+    <!--id与dao接口的方法名一直，指定结果类型，和参数类型 -->
+    <select id="getHDBy" resultMap="HDBy">
+        SELECT
+          *
+        FROM hd_rivernet
+        WHERE  rivernetid= #{riverNetID}
+    </select>
+</mapper>

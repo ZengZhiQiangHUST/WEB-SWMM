@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--客户映射 指定到dao接口 -->
+<mapper namespace="com.jcf.webswmm.mapper.suqian.SecObsMapper">
+    <resultMap id="SecObs" type="com.jcf.webswmm.model.suqian.entity.SecObs">
+        <result property="secID" column="secid"/>
+        <result property="secTime" column="sectime" jdbcType="TIMESTAMP"/>
+        <result property="secWatObs" column="secwatobs"/>
+        <result property="secVelObs" column="secvelobs"/>
+    </resultMap>
+
+    <!--id与dao接口的方法名一直，指定结果类型，和参数类型 -->
+    <select id="getsecobs" resultMap="SecObs">
+        SELECT
+          *
+        FROM sec_obs
+        WHERE secid=#{secID} and sectime<![CDATA[>=]]>#{startTime} and sectime<![CDATA[<=]]>#{endTime} order by sectime
+    </select>
+    <!-- 插入结果到数据库 -->
+    <insert id="insertsecobs" parameterType="java.util.List">
+        insert into sec_obs
+        (
+        secid,
+        sectime,
+        secwatobs,
+        secvelobs
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.secID},
+            #{item.secTime},
+            #{item.secWatObs},
+            #{item.secVelObs}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deletesecobs">
+        delete
+        FROM sec_obs WHERE sectime <![CDATA[<=]]>#{startTime}
+    </delete>
+
+    <delete id="deletesecobs2">
+        delete
+        FROM sec_obs WHERE sectime <![CDATA[>=]]>#{startTime} and sectime<![CDATA[<=]]>#{endTime} and secid=#{secID}
+    </delete>
+
+</mapper>

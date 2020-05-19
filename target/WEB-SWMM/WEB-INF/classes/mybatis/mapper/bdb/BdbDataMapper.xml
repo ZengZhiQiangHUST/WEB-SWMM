@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcf.webswmm.mapper.bdb.BdbDataMapper">
+    <resultMap id="StRainfall" type="com.jcf.webswmm.model.bdb.StRainfall">
+        <result property="stationID" column="stationID"/>
+        <result property="rainfallTime" column="rainfall_time" jdbcType="TIMESTAMP"/>
+        <result property="rainfallValue" column="rainfall_value"/>
+    </resultMap>
+    <resultMap id="StDischarge" type="com.jcf.webswmm.model.bdb.StDischarge">
+        <result property="stationID" column="stationID"/>
+        <result property="dischargeTime" column="discharge_time" jdbcType="TIMESTAMP"/>
+        <result property="dischargeValue" column="discharge_value"/>
+    </resultMap>
+    <resultMap id="StWaterlevel" type="com.jcf.webswmm.model.bdb.StWaterlevel">
+        <result property="stationID" column="stationID"/>
+        <result property="waterlevelTime" column="waterlevel_time" jdbcType="TIMESTAMP"/>
+        <result property="waterlevelValue" column="waterlevel_value"/>
+    </resultMap>
+    <resultMap id="StInfo" type="com.jcf.webswmm.model.bdb.StInfo">
+        <result property="stationPosition" column="station_position"/>
+        <result property="stationID" column="stationID"/>
+        <result property="stationType" column="station_type"/>
+    </resultMap>
+
+    <select id="getRainfallFromBDBMapper" resultMap="StRainfall">
+        SELECT
+          *
+        FROM st_rainfall
+        WHERE stationID = #{stationID} and rainfall_time<![CDATA[>]]>#{startTime} and rainfall_time<![CDATA[<=]]>#{endTime} order by rainfall_time
+    </select>
+
+    <select id="getDischargeFromBDBMapper" resultMap="StDischarge">
+        SELECT
+          *
+        FROM st_discharge
+        WHERE stationID = #{stationID} and discharge_time<![CDATA[>]]>#{startTime} and discharge_time<![CDATA[<=]]>#{endTime} order by discharge_time
+    </select>
+    <select id="getWaterlevelFromBDBMapper" resultMap="StWaterlevel">
+        SELECT
+          *
+        FROM st_waterlevel
+        WHERE stationID = #{stationID} and waterlevel_time<![CDATA[>]]>#{startTime} and waterlevel_time<![CDATA[<=]]>#{endTime} order by waterlevel_time
+    </select>
+    <select id="getMonStationMapper" resultMap="StInfo">
+        SELECT
+          *
+        FROM st_info
+        WHERE  station_position= #{stationID}
+    </select>
+
+    <select id="getMaxTimeBDBDisMapper" resultType="Date">
+       SELECT
+	        max(discharge_time)
+       FROM
+	      bdb.st_discharge
+       WHERE
+	     stationID = #{stationID}
+    </select>
+    <select id="getMaxTimeBDBRainMapper" resultType="Date">
+       SELECT
+	        max(rainfall_time)
+       FROM
+	      bdb.st_rainfall
+       WHERE
+	     stationID = #{stationID}
+    </select>
+    <select id="getMaxTimeBDBWaterlevelMapper" resultType="Date">
+       SELECT
+	        max(waterlevel_time)
+       FROM
+	      bdb.st_waterlevel
+       WHERE
+	     stationID = #{stationID}
+    </select>
+</mapper>

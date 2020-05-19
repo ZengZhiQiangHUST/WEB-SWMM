@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--客户映射 指定到dao接口 -->
+<mapper namespace="com.jcf.webswmm.mapper.station.StationMapper">
+    <resultMap id="stationInfo" type="com.jcf.webswmm.model.db.station.StationInfo">
+        <result property="POINTNAME" column="POINTNAME"/>
+        <result property="MNCODE" column="MNCODE"/>
+        <result property="datetime" column="datetime"/>
+        <result property="address" column="address"/>
+        <result property="code_waterarea" column="code_waterarea"/>
+        <result property="code_sectiontype" column="code_sectiontype"/>
+        <result property="f_301" column="f_301"/>
+        <result property="f_302" column="f_302"/>
+        <result property="f_315" column="f_315"/>
+        <result property="f_311" column="f_311"/>
+        <result property="f_314" column="f_314"/>
+        <result property="f_313" column="f_313"/>
+        <result property="f_1005" column="f_1005"/>
+    </resultMap>
+
+    <!--id与dao接口的方法名一直，指定结果类型，和参数类型 -->
+    <select id="getAll" resultMap="stationInfo">
+        SELECT
+            a.POINTNAME,
+            a.MNCODE,
+            b.datetime,
+            a.ADDRESS,
+            a.CODE_WATERAREA,
+            a.CODE_SECTIONTYPE,
+            b.f_301,
+            b.f_302,
+            b.f_315,
+            b.f_311,
+            b.f_314,
+            b.f_313,
+            b.f_1005
+        FROM
+            prd_env_app.dbo.WMS_WATER_SITE a,
+            PRD_ENV_DTS.dbo.WMS_60 b
+        WHERE
+            a.id = b.nodeid
+        ORDER BY
+            b.datetime DESC
+    </select>
+    <select id="getInfoById" resultMap="stationInfo">
+        SELECT top 1
+            a.POINTNAME,
+            a.MNCODE,
+            b.datetime,
+            a.ADDRESS,
+            a.CODE_WATERAREA,
+            a.CODE_SECTIONTYPE,
+            b.f_301,
+            b.f_302,
+            b.f_315,
+            b.f_311,
+            b.f_314,
+            b.f_313,
+            b.f_1005
+        FROM
+            prd_env_app.dbo.WMS_WATER_SITE a,
+            PRD_ENV_DTS.dbo.WMS_60 b
+        WHERE
+            a.MNCODE = ${mn} AND b.nodeid = a.id
+        ORDER BY
+            b.datetime DESC
+    </select>
+</mapper>

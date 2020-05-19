@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--客户映射 指定到dao接口 -->
+<mapper namespace="com.jcf.webswmm.mapper.suqian.WscStationMapper">
+    <resultMap id="WscStation" type="com.jcf.webswmm.model.suqian.entity.WscStation">
+        <result property="wscName" column="wsc_name"/>
+        <result property="intakeId" column="intake_id"/>
+        <result property="outletId" column="outlet_id"/>
+    </resultMap>
+    <!--id与dao接口的方法名一直，指定结果类型，和参数类型 -->
+    <select id="getwscStationInfo" resultMap="WscStation">
+        SELECT
+          *
+        FROM wsc_stationid
+        WHERE wsc_name=#{wscName}
+    </select>
+</mapper>

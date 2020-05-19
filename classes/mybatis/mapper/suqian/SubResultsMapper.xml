@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--客户映射 指定到dao接口 -->
+<mapper namespace="com.jcf.suchness.mapper.suqian.SubResultsMapper">
+    <resultMap id="SubResults" type="com.jcf.suchness.model.suqian.entity.SubResults">
+        <result property="subId" column="sub_id"/>
+        <result property="subTime" column="sub_time" jdbcType="TIMESTAMP"/>
+        <result property="subRain" column="sub_rain"/>
+        <result property="subInfil" column="sub_infil"/>
+        <result property="subFlow" column="sub_flow"/>
+    </resultMap>
+    <select id="getSubResults" resultMap="SubResults">
+        SELECT
+          *
+        FROM sub_results
+        WHERE sub_id = #{subId} and sub_time<![CDATA[>=]]>#{startTime} and sub_time<![CDATA[<=]]>#{endTime} order by sub_time
+    </select>
+    <!-- 插入子汇水区结果到数据库 -->
+    <insert id="insertSubResults" parameterType="java.util.List">
+        insert into sub_results
+        (
+        sub_id,
+        sub_time,
+        sub_rain,
+        sub_infil,
+        sub_flow
+        )
+        values
+        <foreach collection="list" item="item" index= "index" separator =",">
+            (
+            #{item.subId},
+            #{item.subTime},
+            #{item.subRain},
+            #{item.subInfil},
+            #{item.subFlow}
+            )
+        </foreach>
+    </insert>
+    <delete id="deleteSubResults" >
+        delete
+        FROM sub_results WHERE sub_time <![CDATA[>=]]>#{startTime} and sub_time<![CDATA[<=]]>#{endTime} and sub_id=#{subId}
+    </delete>
+</mapper>

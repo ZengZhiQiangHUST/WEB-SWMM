@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hust.webswmm.mapper.mdb.MdbDataMapper">
+
+    <resultMap id="StartParameter" type="edu.hust.webswmm.model.mdb.entity.StartParameter">
+        <result property="modelName" column="model_name"/>
+        <result property="parameterName" column="parameter_name"/>
+        <result property="parameterValue" column="parameter_value"/>
+    </resultMap>
+    <resultMap id="NodeMap" type="edu.hust.webswmm.model.mdb.entity.NodeMap">
+        <result property="gId" column="gid"/>
+        <result property="serialNum" column="serial_num"/>
+        <result property="type" column="type"/>
+    </resultMap>
+    <resultMap id="ResSubcatchments" type="edu.hust.webswmm.model.mdb.entity.ResSubcatchments">
+        <result property="subId" column="sub_id"/>
+        <result property="subTime" column="sub_time" jdbcType="TIMESTAMP"/>
+        <result property="subRain" column="sub_rain"/>
+        <result property="subInfil" column="sub_infil"/>
+        <result property="subFlow" column="sub_flow"/>
+    </resultMap>
+    <resultMap id="ResJunctions" type="edu.hust.webswmm.model.mdb.entity.ResJunctions">
+        <result property="junId" column="jun_id"/>
+        <result property="junTime" column="jun_time" jdbcType="TIMESTAMP"/>
+        <result property="junDepth" column="jun_depth"/>
+        <result property="junHgl" column="jun_hgl"/>
+        <result property="junLatFlow" column="jun_latflow"/>
+        <result property="junFlow" column="jun_flow"/>
+        <result property="junFlood" column="jun_flood"/>
+    </resultMap>
+    <resultMap id="ResOutfalls" type="edu.hust.webswmm.model.mdb.entity.ResOutfalls">
+        <result property="outfallId" column="outfall_id"/>
+        <result property="outfallTime" column="outfall_time" jdbcType="TIMESTAMP"/>
+        <result property="outfallDepth" column="outfall_depth"/>
+        <result property="outfallHgl" column="outfall_hgl"/>
+        <result property="outfallLatflow" column="outfall_latflow"/>
+        <result property="outfallFlow" column="outfall_flow"/>
+    </resultMap>
+    <resultMap id="ResConduits" type="edu.hust.webswmm.model.mdb.entity.ResConduits">
+        <result property="linkId" column="link_id"/>
+        <result property="linkTime" column="link_time" jdbcType="TIMESTAMP"/>
+        <result property="linkFlow" column="link_flow"/>
+        <result property="linkVelocity" column="link_velocity"/>
+        <result property="linkDepth" column="link_depth"/>
+        <result property="linkVol" column="link_vol"/>
+        <result property="linkCapacity" column="link_capacity"/>
+    </resultMap>
+    <resultMap id="ResSections" type="edu.hust.webswmm.model.mdb.entity.ResSections">
+        <result property="secId" column="sectionID"/>
+        <result property="secTime" column="sec_time" jdbcType="TIMESTAMP"/>
+        <result property="secFlow" column="sec_discharge"/>
+        <result property="secWatlevel" column="sec_Waterlevel"/>
+        <result property="secVelocity" column="sec_velocity"/>
+    </resultMap>
+    <resultMap id="ResSystem" type="edu.hust.webswmm.model.mdb.entity.ResSystem">
+        <result property="sysTime" column="sys_time" jdbcType="TIMESTAMP"/>
+        <result property="sysRain" column="sys_rain"/>
+        <result property="sysInfil" column="sys_infil"/>
+        <result property="sysFlow" column="sys_flow"/>
+        <result property="sysTolInflow" column="sys_tolinflow"/>
+        <result property="sysFlood" column="sys_flood"/>
+        <result property="sysOutflow" column="sys_outflow"/>
+        <result property="sysStorage" column="sys_storage"/>
+    </resultMap>
+    <resultMap id="HDRivernet" type="edu.hust.webswmm.model.mdb.entity.HDRivernet">
+        <result property="riverNetID" column="rivernetid"/>
+        <result property="riverID" column="riverid"/>
+        <result property="byUp" column="byup"/>
+        <result property="byDown" column="bydown"/>
+        <result property="upSectionID" column="upsectionid"/>
+        <result property="downSectionID" column="downsectionid"/>
+    </resultMap>
+    <resultMap id="StationLocation" type="edu.hust.webswmm.model.mdb.entity.StationLocation">
+        <result property="stationID" column="stationid"/>
+        <result property="locationType" column="location_type"/>
+        <result property="locationID" column="locationid"/>
+    </resultMap>
+    <resultMap id="HydroStation" type="edu.hust.webswmm.model.mdb.entity.HydroStation">
+        <result property="stationId" column="station_id"/>
+        <result property="hydroTime" column="hydrotime" jdbcType="TIMESTAMP"/>
+        <result property="flowValue" column="flow"/>
+        <result property="watValue" column="waterlevel"/>
+    </resultMap>
+    <resultMap id="HDPoints" type="edu.hust.webswmm.model.mdb.entity.HDPoints">
+        <result property="riverNetID" column="rivernetid"/>
+        <result property="riverID" column="riverid"/>
+        <result property="sectionID" column="sectionid"/>
+        <result property="x" column="x"/>
+        <result property="y" column="y"/>
+    </resultMap>
+    <resultMap id="HDSection" type="edu.hust.webswmm.model.mdb.entity.HDSection">
+        <result property="riverID" column="riverid"/>
+        <result property="sectionID" column="secid"/>
+        <result property="nLeft" column="nleft"/>
+        <result property="nMiddle" column="nmiddle"/>
+        <result property="nRight" column="nright"/>
+        <result property="dx" column="dis"/>
+    </resultMap>
+    <resultMap id="HDRivertopo" type="edu.hust.webswmm.model.mdb.entity.HDRivertopo">
+        <result property="riverNetID" column="rivernetid"/>
+        <result property="riverID" column="riverid"/>
+        <result property="downRiverID" column="downriverid"/>
+    </resultMap>
+    <resultMap id="RiverDistance" type="edu.hust.webswmm.model.mdb.entity.RiverDistance">
+        <result property="riverId" column="river_id"/>
+        <result property="secId" column="sec_id"/>
+        <result property="distance" column="distance"/>
+    </resultMap>
+    <resultMap id="RiverSec" type="edu.hust.webswmm.model.mdb.entity.RiverSec">
+        <result property="rivernetID" column="rivernetid"/>
+        <result property="riverID" column="riverid"/>
+        <result property="secID" column="secid"/>
+    </resultMap>
+
+    <!--Table: obs_rainfall-->
+    <resultMap id="ObsRainfall" type="edu.hust.webswmm.model.mdb.entity.ObsRainfall">
+        <result property="stationID" column="stationID"/>
+        <result property="rainfallTime" column="rainfall_time" jdbcType="TIMESTAMP"/>
+        <result property="rainfallValue" column="rainfall_value"/>
+    </resultMap>
+    <!--Delete-->
+    <delete id="deleteRainfallToMDBMapper" >
+        delete
+        FROM obs_rainfall
+        WHERE rainfall_time <![CDATA[>=]]>#{startTime} and rainfall_time<![CDATA[<=]]>#{endTime} and stationID=#{stationID}
+    </delete>
+    <!--Insert-->
+    <insert id="insertRainfallToMDBMapper" parameterType="java.util.List">
+        insert into obs_rainfall
+        (
+        stationID,
+        rainfall_time,
+        rainfall_value
+        )
+        values
+        <foreach collection="list" item="item" index= "index" separator =",">
+            (
+            #{item.stationID},
+            #{item.rainfallTime},
+            #{item.rainfallValue}
+            )
+        </foreach>
+    </insert>
+
+    <!--Table: obs_discharge-->
+    <resultMap id="ObsDischarge" type="edu.hust.webswmm.model.mdb.entity.ObsDischarge">
+        <result property="stationID" column="stationID"/>
+        <result property="dischargeTime" column="discharge_time" jdbcType="TIMESTAMP"/>
+        <result property="dischargeValue" column="discharge_value"/>
+    </resultMap>
+    <!--Delete-->
+    <delete id="deleteDischargeToMDBMapper" >
+        delete
+        FROM obs_discharge
+        WHERE discharge_time <![CDATA[>=]]>#{startTime} and discharge_time<![CDATA[<=]]>#{endTime} and stationID=#{stationID}
+    </delete>
+    <!--Insert-->
+    <insert id="insertDischargeToMDBMapper" parameterType="java.util.List">
+        insert into obs_discharge
+        (
+        stationID,
+        discharge_time,
+        discharge_value
+        )
+        values
+        <foreach collection="list" item="item" index= "index" separator =",">
+            (
+            #{item.stationID},
+            #{item.dischargeTime},
+            #{item.dischargeValue}
+            )
+        </foreach>
+    </insert>
+
+    <!--Table: obs_waterlevel-->
+    <resultMap id="ObsWaterlevel" type="edu.hust.webswmm.model.mdb.entity.ObsWaterlevel">
+        <result property="stationID" column="stationID"/>
+        <result property="waterlevelTime" column="waterlevel_time" jdbcType="TIMESTAMP"/>
+        <result property="waterlevelValue" column="waterlevel_value"/>
+    </resultMap>
+    <!--Delete-->
+    <delete id="deleteWaterlevelToMDBMapper" >
+        delete
+        FROM obs_waterlevel
+        WHERE waterlevel_time <![CDATA[>=]]>#{startTime} and waterlevel_time<![CDATA[<=]]>#{endTime} and stationID=#{stationID}
+    </delete>
+    <!--Insert-->
+    <insert id="insertWaterlevelToMDBMapper" parameterType="java.util.List">
+        insert into obs_waterlevel
+        (
+        stationID,
+        waterlevel_time,
+        waterlevel_value
+        )
+        values
+        <foreach collection="list" item="item" index= "index" separator =",">
+            (
+            #{item.stationID},
+            #{item.waterlevelTime},
+            #{item.waterlevelValue}
+            )
+        </foreach>
+    </insert>
+
+    <select id="getMaxTimeMDBDisMapper" resultType="Date">
+       SELECT
+	        max(discharge_time)
+       FROM
+	      mdb.obs_discharge
+       WHERE
+	     stationID = #{stationID}
+    </select>
+
+    <select id="getMaxTimeMDBRainMapper" resultType="Date">
+       SELECT
+	        max(rainfall_time)
+       FROM
+	      mdb.obs_rainfall
+       WHERE
+	     stationID = #{stationID}
+    </select>
+
+    <select id="getMaxTimeMDBWaterlevelMapper" resultType="Date">
+       SELECT
+	        max(waterlevel_time)
+       FROM
+	      mdb.obs_waterlevel
+       WHERE
+	     stationID = #{stationID}
+    </select>
+    <select id="getStartParaMapper" resultType="java.lang.Integer">
+       SELECT
+	        parameter_value
+       FROM
+	      mdb.parameter_start
+       WHERE
+	     model_name = #{modelName} and parameter_name=#{parameterName}
+    </select>
+
+    <select id="getRainfallMapper" resultMap="ObsRainfall">
+       SELECT
+	        *
+       FROM
+	      mdb.obs_rainfall
+       WHERE
+         stationID = #{stationID} and rainfall_time<![CDATA[>=]]>#{startTime} and rainfall_time<![CDATA[<=]]>#{endTime} order by rainfall_time
+    </select>
+
+
+    <select id="getDischargeMapper" resultMap="ObsDischarge">
+       SELECT
+	        *
+       FROM
+	      mdb.obs_discharge
+       WHERE
+         stationID = #{stationID} and discharge_time<![CDATA[>=]]>#{startTime} and discharge_time<![CDATA[<=]]>#{endTime} order by discharge_time
+    </select>
+
+    <select id="getWaterlevelMapper" resultMap="ObsWaterlevel">
+       SELECT
+	        *
+       FROM
+	      mdb.obs_waterlevel
+       WHERE
+         stationID = #{stationID} and waterlevel_time<![CDATA[>=]]>#{startTime} and waterlevel_time<![CDATA[<=]]>#{endTime} order by waterlevel_time
+    </select>
+
+    <!--NodeMap -->
+    <select id="selectJunctionmap" resultMap="NodeMap">
+        SELECT
+        *
+        FROM node_map
+    </select>
+
+    <select id="selectnodemap" resultType="edu.hust.webswmm.model.mdb.entity.NodeMap">
+        SELECT
+        *
+        FROM node_map
+    </select>
+
+    <!--SubMap-->
+    <select id="selectSubmap" resultType="edu.hust.webswmm.model.mdb.entity.SubMap">
+        SELECT
+        *
+        FROM sub_map
+    </select>
+
+    <!--LinkMap-->
+    <select id="selectlinkmap" resultType="edu.hust.webswmm.model.mdb.entity.LinkMap">
+        SELECT
+        *
+        FROM link_map
+    </select>
+
+    <!--res_subcatchments-->
+    <select id="getSubResults" resultMap="ResSubcatchments">
+        SELECT
+          *
+        FROM res_subcatchments
+        WHERE sub_id = #{subId} and sub_time<![CDATA[>=]]>#{startTime} and sub_time<![CDATA[<=]]>#{endTime} order by sub_time
+    </select>
+    <!-- 插入子汇水区结果到数据库 -->
+    <insert id="insertSubResults" parameterType="java.util.List">
+        insert into res_subcatchments
+        (
+        sub_id,
+        sub_time,
+        sub_rain,
+        sub_infil,
+        sub_flow
+        )
+        values
+        <foreach collection="list" item="item" index= "index" separator =",">
+            (
+            #{item.subId},
+            #{item.subTime},
+            #{item.subRain},
+            #{item.subInfil},
+            #{item.subFlow}
+            )
+        </foreach>
+    </insert>
+    <delete id="deleteSubResults" >
+        delete
+        FROM res_subcatchments WHERE sub_time <![CDATA[>=]]>#{startTime} and sub_time<![CDATA[<=]]>#{endTime} and sub_id=#{subId}
+    </delete>
+    <delete id="deleteSubResults2" >
+        delete
+        FROM res_subcatchments WHERE sub_time <![CDATA[<=]]>#{startTime}
+    </delete>
+
+    <!--res_junctions-->
+    <select id="getJunResults" resultMap="ResJunctions">
+        SELECT
+          *
+        FROM res_junctions
+        WHERE jun_id = #{junId} and jun_time<![CDATA[>=]]>#{startTime} and jun_time<![CDATA[<=]]>#{endTime} order by jun_time
+    </select>
+    <!-- 插入节点结果到数据库 -->
+    <insert id="insertJunResults" parameterType="java.util.List">
+        insert into res_junctions
+        (
+        jun_id,
+        jun_time,
+        jun_depth,
+        jun_hgl,
+        jun_latflow,
+        jun_flow,
+        jun_flood
+        )
+        values
+        <foreach collection="list" item="item" index= "index" separator =",">
+            (
+            #{item.junId},
+            #{item.junTime},
+            #{item.junDepth},
+            #{item.junHgl},
+            #{item.junLatFlow},
+            #{item.junFlow},
+            #{item.junFlood}
+            )
+        </foreach>
+    </insert>
+    <delete id="deleteJunResults" >
+        delete
+        FROM res_junctions WHERE jun_time <![CDATA[>=]]>#{startTime} and jun_time<![CDATA[<=]]>#{endTime} and jun_id=#{junId}
+    </delete>
+    <delete id="deleteJunResults2" >
+        delete
+        FROM res_junctions WHERE jun_time <![CDATA[<=]]>#{startTime}
+    </delete>
+
+    <!--res_outfalls-->
+    <select id="getOutfallResults" resultMap="ResOutfalls">
+        SELECT
+          *
+        FROM res_outfalls
+        WHERE outfall_id = #{outfallId} and outfall_time<![CDATA[>=]]>#{startTime} and outfall_time<![CDATA[<=]]>#{endTime} order by outfall_time
+    </select>
+
+    <select id="getSectionResults" resultMap="ResSections">
+        SELECT
+          *
+        FROM res_sections
+        WHERE sectionID = #{secId} and sec_time<![CDATA[>=]]>#{startTime} and sec_time<![CDATA[<=]]>#{endTime} order by sec_time
+    </select>
+    <!-- 插入出水口结果到数据库 -->
+    <insert id="insertOutfallResults" parameterType="java.util.List">
+        insert into res_outfalls
+        (
+        outfall_id,
+        outfall_time,
+        outfall_depth,
+        outfall_hgl,
+        outfall_latflow,
+        outfall_flow
+        )
+        values
+        <foreach collection="list" item="item" index= "index" separator =",">
+            (
+            #{item.outfallId},
+            #{item.outfallTime},
+            #{item.outfallDepth},
+            #{item.outfallHgl},
+            #{item.outfallLatflow},
+            #{item.outfallFlow}
+            )
+        </foreach>
+    </insert>
+    <delete id="deleteOutfallResults" >
+        delete
+        FROM res_outfalls WHERE outfall_time <![CDATA[>=]]>#{startTime} and outfall_time<![CDATA[<=]]>#{endTime} and outfall_id=#{outfallId}
+    </delete>
+    <delete id="deleteOutfallResults2" >
+        delete
+        FROM res_outfalls WHERE outfall_time <![CDATA[<=]]>#{startTime}
+    </delete>
+
+    <!--res_condiuts-->
+    <select id="getLinkResults" resultMap="ResConduits">
+        SELECT
+          *
+        FROM res_conduits
+        WHERE link_id = #{linkId} and link_time<![CDATA[>=]]>#{startTime} and link_time<![CDATA[<=]]>#{endTime} order by link_time
+    </select>
+    <!-- 插入管段结果到数据库 -->
+    <insert id="insertLinkResults" parameterType="java.util.List">
+        insert into res_conduits
+        (
+        link_id,
+        link_time,
+        link_flow,
+        link_velocity,
+        link_depth,
+        link_vol,
+        link_capacity
+        )
+        values
+        <foreach collection="list" item="item" index= "index" separator =",">
+            (
+            #{item.linkId},
+            #{item.linkTime},
+            #{item.linkFlow},
+            #{item.linkVelocity},
+            #{item.linkDepth},
+            #{item.linkVol},
+            #{item.linkCapacity}
+            )
+        </foreach>
+    </insert>
+    <delete id="deleteLinkResults" >
+        delete
+        FROM res_conduits WHERE link_time <![CDATA[>=]]>#{startTime} and link_time<![CDATA[<=]]>#{endTime} and link_id=#{linkId}
+    </delete>
+    <delete id="deleteLinkResults2" >
+        delete
+        FROM res_conduits WHERE link_time <![CDATA[<=]]>#{startTime}
+    </delete>
+
+    <!--City System-->
+    <select id="getCitySystemResults" resultMap="ResSystem">
+        SELECT
+          *
+        FROM res_system
+        WHERE sys_time<![CDATA[>=]]>#{startTime} and sys_time<![CDATA[<=]]>#{endTime} order by sys_time
+    </select>
+    <!-- 插入结果到数据库 -->
+    <insert id="insertCitySystem" parameterType="java.util.List">
+        insert into res_system
+        (
+        sys_time,
+        sys_rain,
+        sys_infil,
+        sys_flow,
+        sys_tolinflow,
+        sys_flood,
+        sys_outflow,
+        sys_storage
+        )
+        values
+        <foreach collection="list" item="item" index= "index" separator =",">
+            (
+            #{item.sysTime},
+            #{item.sysRain},
+            #{item.sysInfil},
+            #{item.sysFlow},
+            #{item.sysTolInflow},
+            #{item.sysFlood},
+            #{item.sysOutflow},
+            #{item.sysStorage}
+            )
+        </foreach>
+    </insert>
+    <delete id="deleteCitySystem" >
+        delete
+        FROM res_system WHERE sys_time <![CDATA[>=]]>#{startTime} and sys_time<![CDATA[<=]]>#{endTime}
+    </delete>
+    <delete id="deleteCitySystem2" >
+        delete
+        FROM res_system WHERE sys_time <![CDATA[<=]]>#{startTime}
+    </delete>
+
+    <!--Max time-->
+    <select id="getSecResMaxTime" resultType="Date">
+        SELECT  max(sec_time) from res_sections
+        WHERE sec_id = #{secId}
+    </select>
+    <select id="getJunResMaxTime" resultType="Date">
+        SELECT  max(jun_time) from res_junctions
+        WHERE jun_id = #{junId}
+    </select>
+    <select id="getLinkResMaxTime" resultType="Date">
+        SELECT  max(link_time) from res_conduits
+        WHERE link_id = #{linkId}
+    </select>
+    <select id="getSubResMaxTime" resultType="Date">
+        SELECT  max(sub_time) from res_subcatchments
+        WHERE sub_id = #{subId}
+    </select>
+    <select id="getOutfallResMaxTime" resultType="Date">
+        SELECT  max(outfall_time) from res_outfalls
+        WHERE outfall_id = #{outfallId}
+    </select>
+    <select id="getRainfallMaxTime" resultType="Date">
+        SELECT  max(rainfall_time) from rainfallstation
+        WHERE station_id = #{stationId}
+    </select>
+    <select id="getHydroMaxTime" resultType="Date">
+        SELECT  max(hydrotime) from hydrostation
+        WHERE station_id = #{stationId}
+    </select>
+
+    <select id="getSecObMT" resultType="Date">
+        SELECT  max(sectime) from sec_obs
+        WHERE secid = #{secID}
+    </select>
+
+    <select id="getHydroMonitorMT" resultType="Date">
+        SELECT  max(hydrotime) from jsrs.dbo.hydrostation
+        WHERE station_id = #{id}
+    </select>
+    <select id="getWQMaxTime" resultType="Date">
+        SELECT  max(datetime) from wqstation
+        WHERE  MNCODE = #{id}
+    </select>
+    <select id="getSystemMaxTime" resultType="Date">
+        SELECT  max(sys_time) from res_system
+    </select>
+    <select id="getWQSecMaxTime" resultType="Date">
+        SELECT  max(datetime) from sec_pollution
+         WHERE  sec_id = #{id}
+    </select>
+    <select id="getSecIdByIntakeId" resultType="String">
+        SELECT sec_id from intake_sec
+        where intake_id= #{intakeId}
+    </select>
+    <select id="getidofLink" resultType="String">
+        SELECT serial_num from reviselink_map
+        where gid= #{gId}
+    </select>
+    <select id="getIntakeMaxTime" resultType="Date">
+        SELECT  max(intake_time) from intake_results
+        WHERE  intake_id = #{intakeId}
+    </select>
+    <select id="getRiverIDByMonitorId" resultType="String">
+        SELECT riverid from monitor_river
+        where monitorid= #{monitorId}
+    </select>
+    <select id="getMonitorIDByMonitorId" resultType="String">
+        SELECT monitorid from monitor_river
+        where secid= #{secId}
+    </select>
+    <select id="getSecidByUpsluiceId" resultType="String">
+        SELECT upsec_id from sluice_sec
+        where sluice_id= #{sluiceId}
+    </select>
+    <select id="getSecidByDsuliceId" resultType="String">
+        SELECT downsec_id from sluice_sec
+        where sluice_id= #{sluiceId}
+    </select>
+
+    <select id="getFeatureById" resultType="String">
+        SELECT
+      features_type
+        FROM feature_id WHERE get_id = #{getId}
+    </select>
+
+    <select id="getFeatureAllID" resultType="String">
+        SELECT
+      get_id
+        FROM feature_id WHERE features_type = #{featuresType}
+    </select>
+
+    <select id="getHDBy" resultMap="HDRivernet">
+        SELECT
+          *
+        FROM hd_rivernet
+        WHERE  rivernetid= #{riverNetID}
+    </select>
+
+    <select id="getLocationIDByStationIDMapper" resultType="String">
+        SELECT
+      locationid
+        FROM station_location WHERE stationid = #{stationID}
+    </select>
+
+    <select id="getLocationTypeByStationIDMapper" resultType="String">
+        SELECT
+      location_type
+        FROM station_location WHERE stationid = #{stationID}
+    </select>
+
+    <select id="getHydroStation" resultMap="HydroStation">
+        SELECT
+          *
+        FROM hydrostation WHERE hydrotime <![CDATA[>=]]>#{startTime} and hydrotime<![CDATA[<=]]>#{endTime} and station_id=#{stationId} order by hydrotime
+    </select>
+
+    <insert id="insertHydroData" parameterType="java.util.List">
+        insert into hydrostation
+        (
+        station_id,
+        hydrotime,
+        flow,
+        waterlevel
+        )
+        values
+        <foreach collection="list" item="item" index= "index" separator =",">
+            (
+            #{item.stationId},
+            #{item.hydroTime},
+            #{item.flowValue},
+            #{item.watValue}
+            )
+        </foreach>
+    </insert>
+    <select id="getMaxTimeHydroMapper" resultType="Date">
+        SELECT  max(hydrotime) from hydrostation
+        WHERE  station_id = #{stationID}
+    </select>
+
+    <select id="getMinTimeHydroMapper" resultType="Date">
+        SELECT  min(hydrotime) from hydrostation
+        WHERE  station_id = #{stationID}
+    </select>
+
+    <delete id="deleteHydroData" >
+        delete
+        FROM hydrostation WHERE hydrotime <![CDATA[>=]]>#{startTime} and hydrotime<![CDATA[<=]]>#{endTime} and station_id=#{stationId}
+    </delete>
+
+    <delete id="deleteHydroData2" >
+        delete
+        FROM hydrostation WHERE hydrotime <![CDATA[<=]]>#{startTime}
+    </delete>
+
+    <select id="getHDPts" resultMap="HDPoints">
+        SELECT
+          *
+        FROM hd_points
+        WHERE  rivernetid= #{riverNetID} and riverid=#{riverID} and sectionid=#{sectionID}
+    </select>
+
+    <select id="getHDSec" resultMap="HDSection">
+        SELECT
+          *
+        FROM hd_section
+        WHERE  riverid= #{riverID}
+    </select>
+
+    <select id="getHDRivertopo" resultMap="HDRivertopo">
+        SELECT
+          *
+        FROM hd_rivertopo
+        WHERE  rivernetid= #{riverNetID}
+    </select>
+
+    <select id="getRiverDistance" resultMap="RiverDistance">
+        SELECT
+        *
+        FROM river_distance
+        WHERE river_id=#{riverId}  order by orderid
+    </select>
+
+
+    <select id="getRiverDistance2" resultMap="RiverDistance">
+        SELECT
+        *
+        FROM river_distance_wq
+        WHERE river_id=#{riverId}  order by orderid
+    </select>
+
+    <select id="getRivernetRiver" resultMap="RiverSec">
+        SELECT
+          *
+        FROM river_sec
+        WHERE  secid= #{secID}
+    </select>
+
+
+    <!--// Table:parameter_1dhd-->
+    <resultMap id="Parameter1DHD" type="edu.hust.webswmm.model.mdb.entity.Parameter1DHD">
+        <result property="parameterName" column="parameter_name"/>
+        <result property="parameterValue" column="parameter_value"/>
+    </resultMap>
+    <select id="getParameter1DHDMapper" resultType="double">
+        SELECT
+          parameter_value
+        FROM parameter_1dhd
+        WHERE  parameter_name= #{parameterName}
+    </select>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--客户映射 指定到dao接口 -->
+<mapper namespace="com.jcf.webswmm.mapper.suqian.MaxOfTableTimeMapper">
+    <!--id与dao接口的方法名一直，指定结果类型，和参数类型 -->
+    <select id="getSecResMaxTime" resultType="Date">
+        SELECT  max(sec_time) from sec_results
+        WHERE sec_id = #{secId}
+    </select>
+    <select id="getJunResMaxTime" resultType="Date">
+        SELECT  max(jun_time) from jun_results
+        WHERE jun_id = #{junId}
+    </select>
+    <select id="getLinkResMaxTime" resultType="Date">
+        SELECT  max(link_time) from link_results
+        WHERE link_id = #{linkId}
+    </select>
+    <select id="getSubResMaxTime" resultType="Date">
+        SELECT  max(sub_time) from sub_results
+        WHERE sub_id = #{subId}
+    </select>
+    <select id="getOutfallResMaxTime" resultType="Date">
+        SELECT  max(outfall_time) from outfall_results
+        WHERE outfall_id = #{outfallId}
+    </select>
+    <select id="getRainfallMaxTime" resultType="Date">
+        SELECT  max(rainfall_time) from rainfallstation
+        WHERE station_id = #{stationId}
+    </select>
+    <select id="getHydroMaxTime" resultType="Date">
+        SELECT  max(hydrotime) from hydrostation
+        WHERE station_id = #{stationId}
+    </select>
+    <select id="getHydroMonitorMT" resultType="Date">
+        SELECT  max(hydrotime) from jsrs.dbo.hydrostation
+        WHERE station_id = #{id}
+    </select>
+    <select id="getWQMaxTime" resultType="Date">
+        SELECT  max(datetime) from wqstation
+        WHERE  MNCODE = #{id}
+    </select>
+</mapper>

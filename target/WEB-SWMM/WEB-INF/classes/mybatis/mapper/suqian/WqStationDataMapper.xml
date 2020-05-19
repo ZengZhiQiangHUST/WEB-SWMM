@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--客户映射 指定到dao接口 -->
+<mapper namespace="com.jcf.webswmm.mapper.suqian.WqStationDataMapper">
+    <resultMap id="WqStation" type="com.jcf.webswmm.model.suqian.entity.WqStation">
+        <result property="pointName" column="POINTNAME"/>
+        <result property="mnCode" column="MNCODE"/>
+        <result property="datetime" column="datetime" jdbcType="TIMESTAMP"/>
+        <result property="f301" column="f_301"/>
+        <result property="f302" column="f_302"/>
+        <result property="f315" column="f_315"/>
+        <result property="f311" column="f_311"/>
+        <result property="f314" column="f_314"/>
+        <result property="f313" column="f_313"/>
+        <result property="f1005" column="f_1005"/>
+    </resultMap>
+    <!--id与dao接口的方法名一直，指定结果类型，和参数类型 -->
+    <select id="getWQStationData" resultMap="WqStation">
+    SELECT
+       *
+    FROM
+	       mathmodel.dbo.wqstation
+    WHERE
+	       MNCODE= ${mnCode} and datetime <![CDATA[>=]]>#{startTime} and datetime<![CDATA[<=]]>#{endTime}
+    ORDER BY
+	       b.datetime DESC
+    </select>
+    <insert id="insertWQData" parameterType="java.util.List">
+        insert into wqstation
+        (
+        MNCODE,
+        datetime,
+        f_301,
+        f_302,
+        f_315,
+        f_311,
+        f_314,
+        f_313,
+        f_1005
+        )
+        values
+        <foreach collection="list" item="item" index= "index" separator =",">
+            (
+            #{item.mnCode},
+            #{item.datetime},
+            #{item.f301},
+            #{item.f302},
+            #{item.f315},
+            #{item.f311},
+            #{item.f314},
+            #{item.f313},
+            #{item.f1005}
+            )
+        </foreach>
+    </insert>
+    <delete id="deleteWQData" >
+        delete
+        FROM wqstation WHERE datetime <![CDATA[>=]]>#{startTime} and datetime<![CDATA[<=]]>#{endTime} and MNCODE=#{mnCode}
+    </delete>
+    <delete id="deleteWQData2" >
+        delete
+        FROM wqstation WHERE datetime <![CDATA[<=]]>#{startTime}
+    </delete>
+</mapper>

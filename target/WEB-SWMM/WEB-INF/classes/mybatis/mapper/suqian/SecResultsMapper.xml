@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--客户映射 指定到dao接口 -->
+<mapper namespace="com.jcf.webswmm.mapper.suqian.SecResultsMapper">
+    <resultMap id="SecResults" type="com.jcf.webswmm.model.suqian.entity.SecResults">
+        <result property="secId" column="sec_id"/>
+        <result property="secTime" column="sec_time" jdbcType="TIMESTAMP"/>
+        <result property="secFlow" column="sec_flow"/>
+        <result property="secWatlevel" column="sec_watlevel"/>
+        <result property="secVelocity" column="sec_velocity"/>
+    </resultMap>
+    <!--id与dao接口的方法名一直，指定结果类型，和参数类型 -->
+    <select id="getResultsecId" resultMap="SecResults">
+        SELECT
+          *
+        FROM sec_results
+        WHERE sec_id = #{secId} and sec_time<![CDATA[>=]]>#{startTime} and sec_time<![CDATA[<=]]>#{endTime} order by sec_time
+    </select>
+    <!-- 插入断面结果到数据库 -->
+    <insert id="insertSecResults" parameterType="java.util.List">
+        insert into sec_results
+        (
+        sec_id,
+        sec_time,
+        sec_flow,
+        sec_watlevel,
+        sec_velocity
+        )
+        values
+        <foreach collection="list" item="item" index= "index" separator =",">
+            (
+            #{item.secId},
+            #{item.secTime},
+            #{item.secFlow},
+            #{item.secWatlevel},
+            #{item.secVelocity}
+            )
+        </foreach>
+    </insert>
+    <delete id="deleteSecData" >
+        delete
+        FROM sec_results WHERE sec_time <![CDATA[>=]]>#{startTime} and sec_time<![CDATA[<=]]>#{endTime} and sec_id=#{secId}
+    </delete>
+    <delete id="deleteSecData2" >
+        delete
+        FROM sec_results WHERE sec_time <![CDATA[<=]]>#{startTime}
+    </delete>
+</mapper>
