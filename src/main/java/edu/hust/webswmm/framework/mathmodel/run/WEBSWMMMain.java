@@ -239,10 +239,10 @@ public class WEBSWMMMain {
 //        // Run SWMM
         int modelStep = 300;
         SWMMEngine coi = SWMMEngine.swhhmtool;
-//        coi.RunSwmmDll(inpFilePath, reportFilePath, outputFilePath);
-//        System.out.println("Step4: SWMM was run!");
-//        // Open the binary file that stores the time series results of SWMM
-//        coi.OpenSwmmOutFile(outputFilePath);
+        coi.RunSwmmDll(inpFilePath, reportFilePath, outputFilePath);
+        System.out.println("Step4: SWMM was run!");
+        // Open the binary file that stores the time series results of SWMM
+        coi.OpenSwmmOutFile(outputFilePath);
 
         // Run one-dimension hydrodynamic model. The following will run a self-developed one-dimensional hydrodynamic model
         HDTool hdTool = new HDTool();
@@ -328,7 +328,7 @@ public class WEBSWMMMain {
             }
 
         // Store 1DHD model results
-
+        // 测试GIT的本地代码提交
 
             List<NodeMap> nodeMaps = mdbDataService.selectJunMap();
             Map<String, SubMap> subMapMap = mdbDataService.selectSubMap();

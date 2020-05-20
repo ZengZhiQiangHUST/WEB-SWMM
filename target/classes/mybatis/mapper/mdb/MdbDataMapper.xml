@@ -46,13 +46,7 @@
         <result property="linkVol" column="link_vol"/>
         <result property="linkCapacity" column="link_capacity"/>
     </resultMap>
-    <resultMap id="ResSections" type="edu.hust.webswmm.model.mdb.entity.ResSections">
-        <result property="secId" column="sectionID"/>
-        <result property="secTime" column="sec_time" jdbcType="TIMESTAMP"/>
-        <result property="secFlow" column="sec_discharge"/>
-        <result property="secWatlevel" column="sec_Waterlevel"/>
-        <result property="secVelocity" column="sec_velocity"/>
-    </resultMap>
+
     <resultMap id="ResSystem" type="edu.hust.webswmm.model.mdb.entity.ResSystem">
         <result property="sysTime" column="sys_time" jdbcType="TIMESTAMP"/>
         <result property="sysRain" column="sys_rain"/>
@@ -119,13 +113,11 @@
         <result property="rainfallTime" column="rainfall_time" jdbcType="TIMESTAMP"/>
         <result property="rainfallValue" column="rainfall_value"/>
     </resultMap>
-    <!--Delete-->
     <delete id="deleteRainfallToMDBMapper" >
         delete
         FROM obs_rainfall
         WHERE rainfall_time <![CDATA[>=]]>#{startTime} and rainfall_time<![CDATA[<=]]>#{endTime} and stationID=#{stationID}
     </delete>
-    <!--Insert-->
     <insert id="insertRainfallToMDBMapper" parameterType="java.util.List">
         insert into obs_rainfall
         (
@@ -149,13 +141,11 @@
         <result property="dischargeTime" column="discharge_time" jdbcType="TIMESTAMP"/>
         <result property="dischargeValue" column="discharge_value"/>
     </resultMap>
-    <!--Delete-->
     <delete id="deleteDischargeToMDBMapper" >
         delete
         FROM obs_discharge
         WHERE discharge_time <![CDATA[>=]]>#{startTime} and discharge_time<![CDATA[<=]]>#{endTime} and stationID=#{stationID}
     </delete>
-    <!--Insert-->
     <insert id="insertDischargeToMDBMapper" parameterType="java.util.List">
         insert into obs_discharge
         (
@@ -179,13 +169,11 @@
         <result property="waterlevelTime" column="waterlevel_time" jdbcType="TIMESTAMP"/>
         <result property="waterlevelValue" column="waterlevel_value"/>
     </resultMap>
-    <!--Delete-->
     <delete id="deleteWaterlevelToMDBMapper" >
         delete
         FROM obs_waterlevel
         WHERE waterlevel_time <![CDATA[>=]]>#{startTime} and waterlevel_time<![CDATA[<=]]>#{endTime} and stationID=#{stationID}
     </delete>
-    <!--Insert-->
     <insert id="insertWaterlevelToMDBMapper" parameterType="java.util.List">
         insert into obs_waterlevel
         (
@@ -379,12 +367,7 @@
         WHERE outfall_id = #{outfallId} and outfall_time<![CDATA[>=]]>#{startTime} and outfall_time<![CDATA[<=]]>#{endTime} order by outfall_time
     </select>
 
-    <select id="getSectionResults" resultMap="ResSections">
-        SELECT
-          *
-        FROM res_sections
-        WHERE sectionID = #{secId} and sec_time<![CDATA[>=]]>#{startTime} and sec_time<![CDATA[<=]]>#{endTime} order by sec_time
-    </select>
+
     <!-- 插入出水口结果到数据库 -->
     <insert id="insertOutfallResults" parameterType="java.util.List">
         insert into res_outfalls
@@ -502,10 +485,7 @@
     </delete>
 
     <!--Max time-->
-    <select id="getSecResMaxTime" resultType="Date">
-        SELECT  max(sec_time) from res_sections
-        WHERE sec_id = #{secId}
-    </select>
+
     <select id="getJunResMaxTime" resultType="Date">
         SELECT  max(jun_time) from res_junctions
         WHERE jun_id = #{junId}
@@ -710,4 +690,26 @@
         FROM parameter_1dhd
         WHERE  parameter_name= #{parameterName}
     </select>
+
+    <!--// Table:res_sections-->
+    <resultMap id="ResSections" type="edu.hust.webswmm.model.mdb.entity.ResSections">
+        <result property="secId" column="sectionID"/>
+        <result property="secTime" column="sec_time" jdbcType="TIMESTAMP"/>
+        <result property="secFlow" column="sec_discharge"/>
+        <result property="secWatlevel" column="sec_Waterlevel"/>
+        <result property="secVelocity" column="sec_velocity"/>
+    </resultMap>
+    <select id="getSectionResults" resultMap="ResSections">
+        SELECT
+          *
+        FROM res_sections
+        WHERE sectionID = #{secId} and sec_time<![CDATA[>=]]>#{startTime} and sec_time<![CDATA[<=]]>#{endTime} order by sec_time
+    </select>
+    <select id="getSecResMaxTime" resultType="Date">
+        SELECT  max(sec_time) from res_sections
+        WHERE sec_id = #{secId}
+    </select>
+
+
+
 </mapper>
